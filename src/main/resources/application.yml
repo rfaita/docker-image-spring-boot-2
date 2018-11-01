@@ -1,0 +1,15 @@
+mongodb:
+  hostname: localhost
+  port: 27017
+  database: test2
+ngrok:
+  url: ${NGROK_URL:""}
+
+
+---
+spring:
+  profiles: docker-compose
+mongodb:
+  hostname: mongodb
+  port: 27017
+  database: test2

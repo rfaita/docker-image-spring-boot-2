@@ -1,0 +1,34 @@
+version: "3.4"
+services:
+
+  mongodb:
+    image: mongo
+    networks:
+    - example_network
+
+  ngrok:
+    image: wernight/ngrok
+    ports:
+    - "5041:4040"
+    networks:
+    - example_network
+    environment:
+    - NGROK_PROTOCOL=http
+    - NGROK_PORT=app:8080
+    - NGROK_DEBUG=false
+
+  app:
+    build:
+      context: .
+      args:
+        JAR_FILE: target/app.jar
+    ports:
+    - "8080:8080"
+    environment:
+    - WAIT_FOR_IT=mongodb:27017 ngrok:4040
+    - JAVA_OPTS=-Xmx256m -Xms128m -Dspring.profiles.active=docker-compose
+    networks:
+    - example_network
+
+networks:
+  example_network:

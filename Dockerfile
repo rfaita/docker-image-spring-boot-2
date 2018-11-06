@@ -1,6 +1,7 @@
 FROM openjdk:8-jdk-alpine
 
 VOLUME /tmp
+RUN apk add --no-cache curl
 RUN apk add --no-cache netcat-openbsd
 RUN apk add --no-cache bash
 
